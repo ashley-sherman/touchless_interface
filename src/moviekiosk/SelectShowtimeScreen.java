@@ -2,6 +2,7 @@ package moviekiosk;
 
 import com.github.sarxos.webcam.Webcam;
 import gestures.Observation;
+import gestures.SwipeGesture;
 import pointerdetector.FindPointer;
 import ui.NotClickableButton;
 import ui.Screen;
@@ -48,7 +49,7 @@ public class SelectShowtimeScreen extends Screen {
             }
             pointerLocation = mirrorAndScale(pointerLocation, super.getDisplayImage(), horizontalScale, verticalScale);
             recordObservation(new Observation(pointerLocation));
-            if (isSwipedLeft(getObservations())) {
+            if (SwipeGesture.isSwipedLeft(getObservations())) {
                 HomeScreen homeScreen = new HomeScreen(this.getDisplayImage(), imageLabel, webcam);
                 homeScreen.start();
                 break;

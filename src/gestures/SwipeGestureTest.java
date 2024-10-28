@@ -1,13 +1,12 @@
-package ui;
+package gestures;
 
-import gestures.Observation;
 
 import java.awt.*;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.LinkedList;
 
-public class ScreenTest {
+public class SwipeGestureTest {
     public static void main(String[] args) {
         testMovedLeftEnough();
         testMovedRightEnough();
@@ -34,53 +33,48 @@ public class ScreenTest {
         current = current.plus(Duration.ofMillis(10));
         observations.add(new Observation(new Point(572, 399), current));
 
-        Screen screen = new Screen(null);
-        assertThat(screen.isSwipedLeft(observations));
+        assertThat(SwipeGesture.isSwipedLeft(observations));
     }
 
     static void testMovedUpEnough() {
-        Screen screen = new Screen(null);
         Observation a = new Observation(new Point(400, 400));
         Observation b = new Observation(new Point(400, 0));
 
-        assertThat(screen.movedUpEnough(a, b));
+        assertThat(SwipeGesture.movedUpEnough(a, b));
 
         b = new Observation(new Point(400, 300));
-        assertThat(!screen.movedUpEnough(a, b));
+        assertThat(!SwipeGesture.movedUpEnough(a, b));
     }
 
     static void testMovedDownEnough() {
-        Screen screen = new Screen(null);
         Observation a = new Observation(new Point(400, 400));
         Observation b = new Observation(new Point(400, 800));
 
-        assertThat(screen.movedDownEnough(a, b));
+        assertThat(SwipeGesture.movedDownEnough(a, b));
 
         b = new Observation(new Point(400, 450));
-        assertThat(!screen.movedDownEnough(a, b));
+        assertThat(!SwipeGesture.movedDownEnough(a, b));
     }
 
     static void testMovedLeftEnough() {
-        Screen screen = new Screen(null);
         Observation a = new Observation(new Point(400, 200));
         Observation b = new Observation(new Point(100, 200));
 
-        assertThat(screen.movedLeftEnough(a, b));
+        assertThat(SwipeGesture.movedLeftEnough(a, b));
 
         b = new Observation(new Point(300, 200));
-        assertThat(!screen.movedLeftEnough(a, b));
+        assertThat(!SwipeGesture.movedLeftEnough(a, b));
     }
 
 
     static void testMovedRightEnough() {
-        Screen screen = new Screen(null);
-        Observation a = new Observation(new Point(400, 200));
+            Observation a = new Observation(new Point(400, 200));
         Observation b = new Observation(new Point(700, 200));
 
-        assertThat(screen.movedRightEnough(a, b));
+        assertThat(SwipeGesture.movedRightEnough(a, b));
 
         b = new Observation(new Point(450, 200));
-        assertThat(!screen.movedRightEnough(a, b));
+        assertThat(!SwipeGesture.movedRightEnough(a, b));
     }
 
     static void assertThat(boolean condition) {

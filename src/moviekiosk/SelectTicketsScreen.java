@@ -2,6 +2,7 @@ package moviekiosk;
 
 import com.github.sarxos.webcam.Webcam;
 import gestures.Observation;
+import gestures.SwipeGesture;
 import pointerdetector.FindPointer;
 import ui.IntegerButton;
 import ui.NotClickableButton;
@@ -79,11 +80,11 @@ public class SelectTicketsScreen extends Screen {
             }
             pointerLocation = mirrorAndScale(pointerLocation, super.getDisplayImage(), horizontalScale, verticalScale);
             recordObservation(new Observation(pointerLocation));
-            if(isSwipedLeft(getObservations())){
+            if(SwipeGesture.isSwipedLeft(getObservations())){
                 SelectShowtimeScreen selectShowtimeScreen = new SelectShowtimeScreen(this.getDisplayImage(), imageLabel, webcam, movieName);
                 selectShowtimeScreen.start();
                 break;
-            } else if(isSwipedRight(getObservations())){
+            } else if(SwipeGesture.isSwipedRight(getObservations())){
                 ExitScreen exitScreen = new ExitScreen(this.getDisplayImage(), imageLabel, webcam, movieName);
                 exitScreen.start();
                 break;

@@ -2,6 +2,7 @@ package atm;
 
 import com.github.sarxos.webcam.Webcam;
 import gestures.Observation;
+import gestures.SwipeGesture;
 import pointerdetector.FindPointer;
 import ui.IntegerButton;
 import ui.NotClickableButton;
@@ -95,12 +96,12 @@ public class ATMWithdrawScreen extends Screen {
                 continue;
             }
             pointerLocation = mirrorAndScale(pointerLocation, super.getDisplayImage(), horizontalScale, verticalScale);
-            if (isSwipedLeft(getObservations())){
+            if (SwipeGesture.isSwipedLeft(getObservations())){
                 ATMPickActionScreen atmPickActionScreen = new ATMPickActionScreen(this.getDisplayImage(), imageLabel, webcam);
                 atmPickActionScreen.start();
                 break;
             }
-            if (isSwipedRight(getObservations())){
+            if (SwipeGesture.isSwipedRight(getObservations())){
                 ATMWithdrawMessageScreen atmWithdrawMessageScreen = new ATMWithdrawMessageScreen(this.getDisplayImage(), imageLabel, webcam, totalCount.getNumber());
                 atmWithdrawMessageScreen.start();
                 break;

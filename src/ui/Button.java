@@ -58,6 +58,18 @@ public class Button {
         graphics.drawString(this.name, topLeft.x + textStart.x, topLeft.y + textStart.y);
     }
 
+    public Point topLeft() {
+        return topLeft;
+    }
+
+    public int width() {
+        return width;
+    }
+
+    public int height() {
+        return height;
+    }
+
     private static final int BORDER_THICKNESS = 4;
     public void drawSelected(Graphics graphics) {
         graphics.setColor(selectedColor);
@@ -75,6 +87,14 @@ public class Button {
     public boolean inButton(Point point) {
         return point.x >= topLeft.x && point.x < topLeft.x + width
                 && point.y >= topLeft.y && point.y < topLeft.y + height;
+    }
+
+    public LocalTime lastClicked() {
+        return lastClicked;
+    }
+
+    public void lastClicked(LocalTime lastClicked) {
+        this.lastClicked = lastClicked;
     }
 
     public boolean isClicked(LinkedList<Observation> observations) {

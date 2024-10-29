@@ -1,5 +1,6 @@
 package ui;
 
+import gestures.ClickGesture;
 import gestures.Observation;
 
 import java.awt.*;
@@ -98,76 +99,7 @@ public class Button {
     }
 
     public boolean isClicked(LinkedList<Observation> observations) {
-        LocalTime twoSecAgo = LocalTime.now().minusSeconds(2);
-
-        boolean tooOld = true;
-        boolean start = false;
-        boolean aboveButtonBeforeClick = false;
-        boolean insideButtonDown = false;
-        boolean belowButton = false;
-        boolean insideButtonUp = false;
-
-        if(lastClicked != null && LocalTime.now().isBefore(lastClicked.plusSeconds(2))){
-            return false;
-        }
-
-        for (int i = 0; i < observations.size(); i++) {
-            Observation currentObservation = observations.get(i);
-            if (currentObservation.getTime().isBefore(twoSecAgo)) {
-                continue;
-            }
-            if (tooOld) {
-                tooOld = false;
-                start = true;
-            }
-            if (start && currentObservation.getPoint().y < topLeft.y) {
-                start = false;
-                aboveButtonBeforeClick = true;
-            }
-            if (aboveButtonBeforeClick) {
-                if (inButton(currentObservation.getPoint())) {
-                    aboveButtonBeforeClick = false;
-                    insideButtonDown = true;
-                } else if (currentObservation.getPoint().y >= topLeft.y) {
-                    start = true;
-                    aboveButtonBeforeClick = false;
-                }
-                // else stay above button before click
-            }
-            int bottomY = topLeft.y + height;
-            if (insideButtonDown) {
-                if (currentObservation.getPoint().y > bottomY) {
-                    insideButtonDown = false;
-                    belowButton = true;
-                }
-                if (!inButton(currentObservation.getPoint())) {
-                    start = true;
-                    insideButtonDown = false;
-                }
-                // else stay
-            }
-            if (belowButton) {
-                if (inButton(currentObservation.getPoint())) {
-                    belowButton = false;
-                    insideButtonUp = true;
-                } else if (currentObservation.getPoint().y < bottomY && !inButton(currentObservation.getPoint())) {
-                    start = true;
-                    belowButton = false;
-                }
-                // else stay
-            }
-            if (insideButtonUp) {
-                if (currentObservation.getPoint().y < topLeft.y) {
-                    lastClicked = currentObservation.getTime();
-                    return true; // yayayay!!!
-                } else if (!inButton(currentObservation.getPoint())) {
-                    start = true;
-                    insideButtonUp = false; // aww :(
-                }
-                // else stay
-            }
-        }
-        return false;
+        return ClickGesture.isClicked(observations, this);
     }
 
 }

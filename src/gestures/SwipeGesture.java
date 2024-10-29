@@ -3,7 +3,10 @@ package gestures;
 import java.time.LocalTime;
 import java.util.LinkedList;
 
+//Recognizes left and right swipes as wide U-shaped motions
 public class SwipeGesture {
+
+    //Detects a wide U-shaped motion that starts moving down and right, then moves up and right.
     public static boolean isSwipedRight(LinkedList<Observation> observations) {
         LocalTime threeSecAgo = LocalTime.now().minusSeconds(3);
         boolean tooOld = true;
@@ -14,6 +17,13 @@ public class SwipeGesture {
         Observation previousObservation = null;
         Observation currentObservation = null;
         Observation lowestObservation = null;
+
+        //Finite State Machine:
+        //0. Initial State: observation older than 2 seconds
+        //1. Start State. Transition to 1, 2
+        //2. Pointer is moving down and right. Transition to 1, 2, 3
+        //3. Pointer is moving up and right. Transition to 1, 3, 4
+        //4. End State: Swipe detected. Done!
 
         for (int i = 0; i < observations.size(); i++){
             previousObservation = currentObservation;
@@ -58,6 +68,9 @@ public class SwipeGesture {
         }
         return false;
     }
+
+
+    //Reverse of isSwipeRight
     public static boolean isSwipedLeft(LinkedList<Observation> observations) {
         LocalTime threeSecAgo = LocalTime.now().minusSeconds(3);
 
@@ -70,6 +83,15 @@ public class SwipeGesture {
         Observation previousObservation = null;
         Observation currentObservation = null;
         Observation lowestObservation = null;
+
+        //Finite State Machine:
+        //0. Initial State: observation older than 2 seconds
+        //1. Start State. Transition to 1, 2
+        //2. Pointer is moving down and left. Transition to 1, 2, 3
+        //3. Pointer is moving up and left. Transition to 1, 3, 4
+        //4. End State: Swipe detected. Done!
+
+
         for (int i = 0; i < observations.size(); i++){
             previousObservation = currentObservation;
             currentObservation = observations.get(i);

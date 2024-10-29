@@ -3,6 +3,7 @@ package gestures;
 import java.awt.*;
 import java.time.LocalTime;
 
+//An observation of a pointer location
 public class Observation {
     private Point point;
     private LocalTime time;

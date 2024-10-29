@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+//Keyboard demo screen. Not all buttons fit on one page, so we have KeyboardPage2
 public class KeyboardPage1 extends Screen {
     private final JLabel imageLabel;
     private final Webcam webcam;

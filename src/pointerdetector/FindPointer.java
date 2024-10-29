@@ -3,11 +3,16 @@ package pointerdetector;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+//Pointer detector.
+//Finds a pointer in image by detecting the borders of an area at least 10 pixels wide
+//that has a color value with a sufficient contrast from the area around it.
+//Images can contain random noise anywhere, so instead of looking for a sharp border,
+//the pointer detector takes a moving average of color values using a sliding window approach.
 public class FindPointer {
-
-    //public static final Color COLOR = Color.GREEN;
     public static final int EXCESS_COLOR = 20;
+    //The type of pointer we are looking for. Configured to green by default, but can be changed.
     public static ColorSelectionMode colorSelectionMode = ColorSelectionMode.GREEN;
+
     public Point findPointerLocation(BufferedImage image) {
         int hGRun = 0;
         int leftTotal = 0;
@@ -92,9 +97,6 @@ public class FindPointer {
             }
         }
 
-        //System.out.println("Left total: " + leftTotal + ", leftCount: " + leftCount + ", rightTotal: " + rightTotal + ", rightCOunt: " + rightCount);
-        //System.out.println("Top total: " + topTotal + ", top count: " + topCount);
-
         if (leftCount == 0 || topCount == 0 || rightCount == 0){
             return null;
         }
@@ -110,7 +112,9 @@ public class FindPointer {
         return colorSelectionMode.isCorrectColor(green, blue, red);
     }
 
+    //These are the different types of pointers we can detect.
     public static enum ColorSelectionMode {
+        //Green works best in most lighting conditions.
         GREEN {
             boolean isCorrectColor(int green, int blue, int red) {
                 return (green >= blue + EXCESS_COLOR) && (green >= red + EXCESS_COLOR);

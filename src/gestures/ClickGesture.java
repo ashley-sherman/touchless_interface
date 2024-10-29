@@ -5,8 +5,11 @@ import ui.Button;
 import java.time.LocalTime;
 import java.util.LinkedList;
 
+//Recognizes a click gesture as a checkbox motion through a button:
+//Pointer must start above button, move through the button on the way down
+//and then back up the through the button and end up above the button.
 public class ClickGesture {
-    public boolean isClicked(LinkedList<Observation> observations, Button button) {
+    public static boolean isClicked(LinkedList<Observation> observations, Button button) {
         LocalTime twoSecAgo = LocalTime.now().minusSeconds(2);
 
         boolean tooOld = true;
@@ -21,7 +24,14 @@ public class ClickGesture {
             return false;
         }
 
-        //Finite State Machine
+        //Finite State Machine:
+        //0. Initial state: Observation within last two seconds
+        //1. Start state. Can transition to 1, 2
+        //2. Pointer is above button. Can transition to 1, 2, 3
+        //3. Pointer is in button on the way down. Can transition to 1, 3, 4
+        //4. Pointer is below button. Can transition to 1, 4, 5
+        //5. Pointer is inside button on the way up. Can transition to 1, 5, 6.
+        //6. Pointer is above button (Exit state). Click Detected!
 
         for (int i = 0; i < observations.size(); i++) {
             Observation currentObservation = observations.get(i);

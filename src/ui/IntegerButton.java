@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.*;
 
+//A button that can hold and display integer values instead of string names
 public class IntegerButton extends NotClickableButton {
 
     private int number;
